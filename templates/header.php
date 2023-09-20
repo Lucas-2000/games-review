@@ -37,11 +37,10 @@ if (isset($_SESSION['user'])) {
           <li class="nav-item">
             <?php if ($user): ?>
               <form action="" method="POST">
-                <button class="btn btn-danger" type="submit">Sair
-                  </a>
+                <button class="btn btn-danger" type="submit">Sair></button>
               </form>
             <?php else: ?>
-              <a class="btn btn-primary" href="">Login</a>
+              <a class="btn btn-primary" href="<?= $BASE_URL ?>/login.php">Login</a>
             <?php endif; ?>
           </li>
         </ul>
