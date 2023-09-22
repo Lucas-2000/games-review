@@ -1,7 +1,6 @@
 <?php
 require_once("templates/header.php");
 $url = $BASE_URL . "/login.php";
-session_start();
 ?>
 
 <main class="container mt-4">

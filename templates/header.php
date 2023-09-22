@@ -1,10 +1,12 @@
 <?php
-require_once("config/url.php");
+include_once("config/url.php");
+
+session_start();
 
 $user = "";
 
-if (isset($_SESSION['user'])) {
-  $user = $_SESSION['user'];
+if (isset($_SESSION['user_token']) && !empty($_SESSION['user_token'])) {
+  $user = $_SESSION['user_token'];
 }
 ?>
 
@@ -36,9 +38,7 @@ if (isset($_SESSION['user'])) {
           </li>
           <li class="nav-item">
             <?php if ($user): ?>
-              <form action="" method="POST">
-                <button class="btn btn-danger" type="submit">Sair></button>
-              </form>
+              <a class="btn btn-danger" href="<?= $BASE_URL ?>/logout.php">Sair</a>
             <?php else: ?>
               <a class="btn btn-primary" href="<?= $BASE_URL ?>/login.php">Login</a>
             <?php endif; ?>

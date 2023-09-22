@@ -1,11 +1,9 @@
 <?php
 require_once("templates/header.php");
-
-session_start();
 ?>
 
 <main class="container mt-4">
-  <form class="mx-auto col-md-6">
+  <form class="mx-auto col-md-6" action="<?= $BASE_URL ?>/process/userProcess.php" method="POST">
     <h1>Faça seu login</h1>
     <hr>
     <?php
@@ -14,7 +12,17 @@ session_start();
     }
     unset($_SESSION['msg']);
     ?>
+    <?php
+    if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
+      foreach ($_SESSION['errors'] as $error) {
+        echo "<div class='alert alert-danger'>$error</div>";
+      }
+
+      unset($_SESSION['errors']);
+    }
+    ?>
     <div class="mb-3">
+      <input type="hidden" name="type" value="login">
       <label for="username" class="form-label">Username</label>
       <input type="username" class="form-control" id="username" name="username" placeholder="Digite o seu username" required>
     </div>

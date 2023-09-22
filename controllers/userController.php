@@ -64,20 +64,24 @@ class UserController implements UserRepository
 
   public function findByUsername($username)
   {
-    $stmt = $this->conn->getConnection()->query("SELECT * FROM users WHERE username = :username");
+    $stmt = $this->conn->getConnection()->prepare("SELECT * FROM users WHERE username = :username");
 
     $stmt->bindValue(':username', $username);
 
-    $user = $stmt->fetch();
+    $stmt->execute();
 
-    $this->conn->closeConnection();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $user;
+    if ($user) {
+      return $user;
+    } else {
+      return null;
+    }
   }
 
   public function findByToken($token)
   {
-    $stmt = $this->conn->getConnection()->query("SELECT * FROM users WHERE token = :token");
+    $stmt = $this->conn->getConnection()->prepare("SELECT * FROM users WHERE token = :token");
 
     $stmt->bindValue(':token', $token);
 
@@ -90,16 +94,25 @@ class UserController implements UserRepository
 
   public function findByUsernameAndPassword($username, $password)
   {
-    $stmt = $this->conn->getConnection()->query("SELECT * FROM users WHERE username = :username AND password = :password");
+    $stmt = $this->conn->getConnection()->prepare("SELECT * FROM users WHERE username = :username");
 
     $stmt->bindValue(':username', $username);
-    $stmt->bindValue(':password', $password);
 
-    $user = $stmt->fetch();
+    $stmt->execute();
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $this->conn->closeConnection();
 
-    return $user;
+    if ($user) {
+      $hashedPassword = $user['password'];
+      if (password_verify($password, $hashedPassword)) {
+        $_SESSION['user_token'] = $user['token'];
+        return $user;
+      }
+    }
+
+    return null;
   }
 
   public function findByUsernameOrEmail($username, $email)
@@ -146,7 +159,7 @@ class UserController implements UserRepository
 
   public function delete($id)
   {
-    $stmt = $this->conn->getConnection()->query("DELETE FROM users WHERE id = :id");
+    $stmt = $this->conn->getConnection()->prepare("DELETE FROM users WHERE id = :id");
 
     $stmt->bindValue(':id', $id);
 

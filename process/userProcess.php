@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include_once("../config/connection.php");
 include_once("../models/user.php");
 include_once("../controllers/userController.php");
@@ -73,5 +75,34 @@ if ($data['type'] == 'register') {
       header("Location: ../register.php");
       exit();
     }
+  }
+} else if ($data['type'] == 'login') {
+  $username = $data['username'];
+  $password = $data['password'];
+
+  if (empty($username)) {
+    $errors[] = "Username é obrigatório.";
+  }
+
+  if (empty($password)) {
+    $errors[] = "Senha é obrigatória.";
+  }
+
+  if (empty($errors)) {
+    $user = $userController->findByUsernameAndPassword($username, $password);
+    if ($user !== null) {
+      session_start();
+      header("Location: ../index.php");
+      exit();
+    } else {
+      $errors[] = "Credenciais inválidas.";
+    }
+  }
+
+  if (!empty($errors)) {
+    session_start();
+    $_SESSION['errors'] = $errors;
+    header("Location: ../login.php");
+    exit();
   }
 }
