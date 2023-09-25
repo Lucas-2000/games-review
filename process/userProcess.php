@@ -93,6 +93,7 @@ if ($data['type'] == 'register') {
     if ($user !== null) {
       session_start();
       $_SESSION['username'] = $username;
+      $_SESSION['role'] = $user['role'];
       header("Location: ../index.php");
       exit();
     } else {

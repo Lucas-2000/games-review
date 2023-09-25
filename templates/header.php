@@ -5,6 +5,7 @@ session_start();
 
 $user = "";
 $username = "";
+$role = "";
 
 if (isset($_SESSION['user_token']) && !empty($_SESSION['user_token'])) {
   $user = $_SESSION['user_token'];
@@ -12,6 +13,10 @@ if (isset($_SESSION['user_token']) && !empty($_SESSION['user_token'])) {
 
 if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
   $username = $_SESSION['username'];
+}
+
+if (isset($_SESSION['role']) && !empty($_SESSION['role'])) {
+  $role = $_SESSION['role'];
 }
 ?>
 
@@ -35,12 +40,14 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
       </a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="">Incluir jogo</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">Meus jogos</a>
-          </li>
+          <?php if ($role === 'admin'): ?>
+            <li class="nav-item">
+              <a class="nav-link" href="">Incluir jogo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Meus jogos</a>
+            </li>
+          <?php endif; ?>
           <?php if ($username): ?>
             <li class="nav-item">
               <span class="nav-link text-primary">
