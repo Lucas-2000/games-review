@@ -4,9 +4,14 @@ include_once("config/url.php");
 session_start();
 
 $user = "";
+$username = "";
 
 if (isset($_SESSION['user_token']) && !empty($_SESSION['user_token'])) {
   $user = $_SESSION['user_token'];
+}
+
+if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
+  $username = $_SESSION['username'];
 }
 ?>
 
@@ -36,6 +41,13 @@ if (isset($_SESSION['user_token']) && !empty($_SESSION['user_token'])) {
           <li class="nav-item">
             <a class="nav-link" href="">Meus jogos</a>
           </li>
+          <?php if ($username): ?>
+            <li class="nav-item">
+              <span class="nav-link text-primary">
+                <?= $username ?>
+              </span>
+            </li>
+          <?php endif; ?>
           <li class="nav-item">
             <?php if ($user): ?>
               <a class="btn btn-danger" href="<?= $BASE_URL ?>/logout.php">Sair</a>

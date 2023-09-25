@@ -92,6 +92,7 @@ if ($data['type'] == 'register') {
     $user = $userController->findByUsernameAndPassword($username, $password);
     if ($user !== null) {
       session_start();
+      $_SESSION['username'] = $username;
       header("Location: ../index.php");
       exit();
     } else {

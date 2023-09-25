@@ -1,5 +1,11 @@
 <?php
 require_once("templates/header.php");
+
+if (isset($_SESSION['user_token'])) {
+  header('Location: index.php');
+  exit;
+}
+
 ?>
 
 <main class="container mt-4">
