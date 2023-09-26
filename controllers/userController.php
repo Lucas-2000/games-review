@@ -49,14 +49,14 @@ class UserController implements UserRepository
 
     foreach ($data as $data) {
       $user = new User();
-      $user->id = $data['id'];
-      $user->username = $data['username'];
-      $user->email = $data['email'];
-      $user->password = $data['password'];
-      $user->role = $data['role'];
-      $user->token = $data['token'];
+      $user->setId($data['id']);
+      $user->setUsername($data['username']);
+      $user->setEmail($data['email']);
+      $user->setPassword($data['password']);
+      $user->setRole($data['role']);
+      $user->setToken($data['token']);
 
-      $users = $user;
+      $users[] = $user;
     }
 
     return $users;

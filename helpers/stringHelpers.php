@@ -14,4 +14,16 @@ class StringHelpers
 
     return $token;
   }
+
+  public function generateSlug($name)
+  {
+    $slug = "";
+    $array = explode(" ", strtolower(trim($name)));
+
+    for ($i = 0; $i < count($array); $i++) {
+      $slug .= $array[$i] . "-";
+    }
+
+    return $slug;
+  }
 }

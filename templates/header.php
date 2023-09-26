@@ -42,7 +42,7 @@ if (isset($_SESSION['role']) && !empty($_SESSION['role'])) {
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <?php if ($role === 'admin'): ?>
             <li class="nav-item">
-              <a class="nav-link" href="">Incluir jogo</a>
+              <a class="nav-link" href="<?= $BASE_URL ?>/new_game.php">Incluir jogo</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="">Meus jogos</a>
