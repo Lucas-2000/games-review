@@ -1,9 +1,11 @@
 <?php
 
-include_once("config/connection.php");
-include_once("repositories/gameRepository.php");
-include_once("models/game.php");
-include_once("helpers/stringHelpers.php");
+$currentDirectory = __DIR__;
+
+require_once($currentDirectory . "/../config/connection.php");
+require_once($currentDirectory . "/../repositories/gameRepository.php");
+require_once($currentDirectory . "/../models/game.php");
+require_once($currentDirectory . "/../helpers/stringHelpers.php");
 
 class GameController implements GameRepository
 {
@@ -29,7 +31,7 @@ class GameController implements GameRepository
     $slug = $stringHelper->generateSlug($name);
     $userId = $game->getUserId();
 
-    $stmt = $this->conn->getConnection()->prepare("INSERT INTO game(image, name, description, price, platforms, release_date, game_producer, classification, user_id, slug) VALUES (:image, :name, :description, :price, :platforms, :releaseDate, :gameProducer, :classification, :userId, :slug)");
+    $stmt = $this->conn->getConnection()->prepare("INSERT INTO games(image, name, description, price, platforms, release_date, game_producer, classification, user_id, slug) VALUES (:image, :name, :description, :price, :platforms, :releaseDate, :gameProducer, :classification, :userId, :slug)");
 
     $stmt->bindValue(':image', $image);
     $stmt->bindValue(':name', $name);

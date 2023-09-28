@@ -1,6 +1,8 @@
 <?php
+$currentDirectory = __DIR__;
 
-include_once("models/game.php");
+require_once($currentDirectory . "/../models/game.php");
+
 
 interface GameRepository
 {

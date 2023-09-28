@@ -19,9 +19,13 @@ class StringHelpers
   {
     $slug = "";
     $array = explode(" ", strtolower(trim($name)));
+    $count = count($array);
 
-    for ($i = 0; $i < count($array); $i++) {
-      $slug .= $array[$i] . "-";
+    for ($i = 0; $i < $count; $i++) {
+      $slug .= $array[$i];
+      if ($i < $count - 1) {
+        $slug .= "-";
+      }
     }
 
     return $slug;
