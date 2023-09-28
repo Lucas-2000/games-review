@@ -96,6 +96,25 @@ class GameController implements GameRepository
     }
   }
 
+  public function findByName($name = null)
+  {
+    if ($name === null) {
+      $stmt = $this->conn->getConnection()->prepare("SELECT * FROM games");
+    } else {
+      $stmt = $this->conn->getConnection()->prepare("SELECT * FROM games WHERE name LIKE :name");
+
+      $name = '%' . $name . '%';
+
+      $stmt->bindValue(':name', $name);
+    }
+
+    $stmt->execute();
+
+    $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $games;
+  }
+
   public function update(Game $game)
   {
     $stringHelper = new StringHelpers();

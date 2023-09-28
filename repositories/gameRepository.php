@@ -9,6 +9,7 @@ interface GameRepository
   public function create(Game $game);
   public function findAll();
   public function findBySlug($slug);
+  public function findByName($name);
   public function update(Game $game);
   public function delete($id);
 }
