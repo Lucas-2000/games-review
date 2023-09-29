@@ -35,6 +35,7 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
   <link rel="stylesheet" href="styles/global.css">
   <style>
     body {
+      padding-top: 70px;
       padding-bottom: 60px;
     }
 
@@ -52,12 +53,20 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
       height: 200px;
       object-fit: cover;
     }
+
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
   </style>
   <title>Games Review</title>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-header">
     <div class="container">
       <a class="navbar-brand" href="<?= $BASE_URL ?>">
         Games Review
@@ -69,7 +78,7 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
               <a class="nav-link" href="<?= $BASE_URL ?>/new_game.php">Incluir jogo</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Meus jogos</a>
+              <a class="nav-link" href="<?= $BASE_URL ?>/my_games.php">Meus jogos</a>
             </li>
           <?php endif; ?>
           <?php if ($username): ?>
