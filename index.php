@@ -51,7 +51,7 @@ if (isset($_GET['search-games'])) {
                 <?php echo $game['description'] ?>
               </p>
               <div class="mt-auto">
-                <a href="<?= $BASE_URL ?>/game.php?<?php echo $game['slug'] ?>" class="btn btn-primary">Veja mais</a>
+                <a href="<?= $BASE_URL ?>/game.php?slug=<?php echo $game['slug'] ?>" class="btn btn-primary">Veja mais</a>
               </div>
             </div>
           </div>

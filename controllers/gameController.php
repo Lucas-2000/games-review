@@ -79,9 +79,7 @@ class GameController implements GameRepository
 
   public function findBySlug($slug)
   {
-    $stmt = $this->conn->getConnection()->prepare("SELECT * FROM games WHERE slug LIKE :slug");
-
-    $slug = '%' . $slug . '%';
+    $stmt = $this->conn->getConnection()->prepare("SELECT * FROM games WHERE slug = :slug");
 
     $stmt->bindValue(':slug', $slug);
 
@@ -131,7 +129,7 @@ class GameController implements GameRepository
     $slug = $stringHelper->generateSlug($name);
     $userId = $game->getUserId();
 
-    $stmt = $this->conn->getConnection()->prepare("UPDATE games SET image = :image, name = :name, description = :description, price = :price, platforms = :platforms, releaseDate = :releaseDate, gameProducer = :gameProducer, classification = :classification, userId = :userId, slug = :slug WHERE id = :id");
+    $stmt = $this->conn->getConnection()->prepare("UPDATE games SET image = :image, name = :name, description = :description, price = :price, platforms = :platforms, release_date = :releaseDate, game_producer = :gameProducer, classification = :classification, user_id = :userId, slug = :slug WHERE id = :id");
 
     $stmt->bindValue(':id', $id);
     $stmt->bindValue(':image', $image);

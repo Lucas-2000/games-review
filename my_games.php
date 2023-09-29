@@ -15,6 +15,12 @@ $games = $gameController->findAll();
 <main class="container">
   <h1>Meus jogos</h1>
   <hr>
+  <?php
+  if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
+    echo "<div class='alert alert-success'>" . $_SESSION['msg'] . "</div>";
+  }
+  unset($_SESSION['msg']);
+  ?>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -33,8 +39,8 @@ $games = $gameController->findAll();
             <?php echo $game->getName(); ?>
           </td>
           <td>
-            <a class="btn btn-warning" href="<?= $BASE_URL ?>/edit-game.php?<?php echo $game->getSlug() ?>">Editar</a>
-            <a class="btn btn-danger" href="<?= $BASE_URL ?>/delete-game.php?<?php echo $game->getSlug() ?>">Excluir</a>
+            <a class="btn btn-warning" href="<?= $BASE_URL ?>/edit_game.php?slug=<?php echo $game->getSlug() ?>">Editar</a>
+            <a class="btn btn-danger" href="<?= $BASE_URL ?>/delete_game.php?slug=<?php echo $game->getSlug() ?>">Excluir</a>
           </td>
         </tr>
       <?php endforeach; ?>
