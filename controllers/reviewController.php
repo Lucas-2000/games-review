@@ -22,9 +22,9 @@ class ReviewController implements ReviewRepository
     $userId = $review->getUserId();
     $gameId = $review->getGameId();
 
-    $stmt = $this->conn->getConnection()->prepare("INSERT INTO reviews(review, grade, game_id, user_id) VALUES (:reviewDesc, :grade, :userId, :gameId)");
+    $stmt = $this->conn->getConnection()->prepare("INSERT INTO reviews(review, grade, game_id, user_id) VALUES (:review, :grade, :gameId, :userId)");
 
-    $stmt->bindValue(':reviewDesc', $reviewDesc);
+    $stmt->bindValue(':review', $reviewDesc);
     $stmt->bindValue(':grade', $grade);
     $stmt->bindValue(':userId', $userId);
     $stmt->bindValue(':gameId', $gameId);
@@ -56,17 +56,44 @@ class ReviewController implements ReviewRepository
     return $reviews;
   }
 
-  public function findByGameId($gameId)
+
+  public function findByGameId($gameId, $offset, $limit)
   {
-    $stmt = $this->conn->getConnection()->prepare("SELECT * FROM reviews WHERE game_id = :gameId");
+    $stmt = $this->conn->getConnection()->prepare("SELECT * FROM reviews WHERE game_id = :gameId LIMIT :offset, :limit");
+
+    $stmt->bindValue(':gameId', $gameId);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function calculateAverageRating($gameId)
+  {
+    $stmt = $this->conn->getConnection()->prepare("SELECT AVG(grade) AS avg_rating FROM reviews WHERE game_id = :gameId");
 
     $stmt->bindValue(':gameId', $gameId);
 
     $stmt->execute();
 
-    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $reviews;
+    return $result['avg_rating'];
+  }
+
+  public function countReviews($gameId)
+  {
+    $stmt = $this->conn->getConnection()->prepare("SELECT COUNT(*) AS total_reviews FROM reviews WHERE game_id = :gameId");
+
+    $stmt->bindValue(':gameId', $gameId);
+
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result['total_reviews'];
   }
 
   public function update(Review $review)

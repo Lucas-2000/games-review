@@ -61,6 +61,42 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
       right: 0;
       z-index: 1000;
     }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      list-style: none;
+      padding: 0;
+    }
+
+    .pagination a,
+    .pagination .current-page {
+      text-decoration: none;
+      color: #007BFF;
+      background-color: #f8f9fa;
+      padding: 5px 10px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .pagination a:hover {
+      background-color: #007BFF;
+      color: #fff;
+    }
+
+    .pagination .prev-next {
+      font-weight: bold;
+    }
+
+    .pagination .prev {
+      margin-right: 10px;
+    }
+
+    .pagination .next {
+      margin-left: 10px;
+    }
   </style>
   <title>Games Review</title>
 </head>
