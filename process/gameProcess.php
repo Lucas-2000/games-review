@@ -188,4 +188,24 @@ if ($data['type'] == 'create-game') {
       exit();
     }
   }
+} else if ($data['type'] == 'delete-game') {
+  $id = $data['id'];
+
+  if (empty($data['id'])) {
+    $errors[] = "Id é obrigatório.";
+  }
+
+  if (empty($errors)) {
+    session_start();
+    $gameController->delete($id);
+    $_SESSION['msg'] = "Jogo deletado com sucesso.";
+    header("Location: ../my_games.php");
+  } else {
+    if (!empty($errors)) {
+      session_start();
+      $_SESSION['errors'] = $errors;
+      header("Location: ../delete_game.php");
+      exit();
+    }
+  }
 }
