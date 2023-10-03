@@ -128,34 +128,40 @@ if ($currentPage < 1 || $currentPage > $totalPages) {
   }
   unset($_SESSION['msg']);
   ?>
-  <form class="mt-3" action="<?= $BASE_URL ?>/process/reviewProcess.php" method="POST">
-    <div class="mb-3">
-      <h2>Faça um novo review</h2>
-    </div>
-    <div class="mb-3">
-      <input type="hidden" name="type" value="create-review">
-      <input type="hidden" name="slug" value="<?= $_GET['slug'] ?>">
-      <input type="hidden" name="user-id" value="<?= $userId ?>">
-      <input type="hidden" name="game-id" value="<?= $game['id'] ?>">
-    </div>
-    <div class="mb-3">
-      <label for="review" class="form-label">Review</label>
-      <textarea rows="6" type="text" class="form-control" id="review" name="review" placeholder="Digite a avaliação jogo" required></textarea>
-      <p>Quantidade de caracteres digitados:
-        <span id="charCount">0</span>
-      </p>
-    </div>
-    <div class="mb-3">
-      <label for="grade" class="form-label">Nota</label>
-      <input type="number" class="form-control" id="grade" name="grade" placeholder="Digite a nota do jogo" required>
-    </div>
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Salvar</button>
-    </div>
-  </form>
+  <?php
+  if (isset($_SESSION['user_token'])):
+    ?>
+    <form class="mt-3" action="<?= $BASE_URL ?>/process/reviewProcess.php" method="POST">
+      <div class="mb-3">
+        <h2>Faça um novo review</h2>
+      </div>
+      <div class="mb-3">
+        <input type="hidden" name="type" value="create-review">
+        <input type="hidden" name="slug" value="<?= $_GET['slug'] ?>">
+        <input type="hidden" name="user-id" value="<?= $userId ?>">
+        <input type="hidden" name="game-id" value="<?= $game['id'] ?>">
+      </div>
+      <div class="mb-3">
+        <label for="review" class="form-label">Review</label>
+        <textarea rows="6" type="text" class="form-control" id="review" name="review" placeholder="Digite a avaliação jogo" required></textarea>
+        <p>Quantidade de caracteres digitados:
+          <span id="charCount">0</span>
+        </p>
+      </div>
+      <div class="mb-3">
+        <label for="grade" class="form-label">Nota</label>
+        <input type="number" class="form-control" id="grade" name="grade" placeholder="Digite a nota do jogo" required>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  <?php else: ?>
+    <div class='alert alert-danger'>Você precisa estar logado para adicionar um review.</div>
+    <?php
+  endif;
+  ?>
 </main>
-
-
 <?php
 require_once("templates/footer.php");
 ?>
