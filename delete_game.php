@@ -3,6 +3,11 @@ require_once("templates/header.php");
 include_once("controllers/gameController.php");
 include_once("config/connection.php");
 
+if (isset($_SESSION['role']) && $_SESSION['role'] != 'admin') {
+  header('Location: index.php');
+  exit;
+}
+
 $url = $BASE_URL . "/my_games.php";
 
 $conn = new Connection();
